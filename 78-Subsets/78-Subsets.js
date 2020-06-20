@@ -1,12 +1,9 @@
 const subsets = (nums) => {
   let results = [];
   const tree = (start, index, length) => {
-    // console.log(dup);
     if (start.length < length) {
       for (let j = index; j < nums.length; j++) {
-        let dup = [...start];
-        dup.push(nums[j]);
-        tree(dup, j + 1, length);
+        tree([...start, nums[j]], j + 1, length);
       }
     } else {
       results.push(start);
