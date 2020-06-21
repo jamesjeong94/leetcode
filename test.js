@@ -1,32 +1,17 @@
-function stock_runs(prices) {
-  let max = 0;
-  let localMax = 0;
-  let inc = null;
-  for (let i = 0; i < prices.length; i++) {
-    if (inc === null) {
-      if (prices[i] > prices[i - 1]) {
-        inc = true;
-      } else {
-        inc = false;
-      }
-    }
-    if (prices[i] > prices[i - 1] && inc === true) {
-      localMax++;
-    }
-    if (prices[i] < prices[i - 1] && inc === false) {
-      localMax++;
-    }
-    if (prices[i] > prices[i - 1] && inc === false) {
-      localMax = 1;
-    }
-    if (prices[i] < prices[i - 1] && inc === true) {
-      localMax = 1;
-    }
-    if (localMax > max) {
-      max = localMax;
-    }
+/**
+ * @pcostrcostm {number[]} cost
+ * @return {number}
+ */
+const minCostClimbingStcostirs = (cost, m = {}) => {
+  let n = cost.length;
+  let dp = Array(n + 1);
+  dp[0] = cost[0];
+  dp[1] = cost[1];
+  for (let i = 2; i < n; ++i) {
+    dp[i] = cost[i] + Math.min(dp[i - 2], dp[i - 1]);
+    console.log(dp);
   }
-  return max;
-}
+  return Math.min(dp[n - 2], dp[n - 1]);
+};
 
-console.log(stock_runs([2, 3, 4, 3, 2, 1]));
+console.log(minCostClimbingStcostirs([10, 15, 20]));
