@@ -1,8 +1,3 @@
-/**
- * @param {number[]} nums
- * @param {number} k
- * @return {number[]}
- */
 var topKFrequent = function (nums, k) {
   const cache = {};
   for (let i = 0; i < nums.length; i++) {
@@ -14,6 +9,13 @@ var topKFrequent = function (nums, k) {
   }
   const values = Object.keys(cache);
   values.sort((a, b) => {
+    if (cache[a] === cache[b]) {
+      if (b > a) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
     return cache[b] - cache[a];
   });
   let prev = values[0];
@@ -26,37 +28,4 @@ var topKFrequent = function (nums, k) {
   return results;
 };
 
-console.log(
-  topKFrequent(
-    [
-      3,
-      2,
-      3,
-      1,
-      2,
-      4,
-      5,
-      5,
-      6,
-      7,
-      7,
-      8,
-      2,
-      3,
-      1,
-      1,
-      1,
-      10,
-      11,
-      5,
-      6,
-      2,
-      4,
-      7,
-      8,
-      5,
-      6,
-    ],
-    10
-  )
-);
+console.log(topKFrequent(['i', 'love', 'leetcode', 'i', 'love', 'coding'], 3));
