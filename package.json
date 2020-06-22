@@ -18,7 +18,7 @@
   "homepage": "https://github.com/jamesjeong94/leetcode#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "node count.js"
+      "pre-commit": "node count.js; git add count.js"
     }
   },
   "dependencies": {
