@@ -22,15 +22,15 @@ var threeSum = (nums) => {
         results.push([nums[i], nums[b], nums[c]]);
       }
       if (sum >= 0) {
-        while (nums[c] === nums[c - 1]) {
-          c--;
-        }
+        // while (nums[c] === nums[c - 1]) {
+        //   c--;
+        // }
         c--;
       }
       if (sum <= 0) {
-        while (nums[b] === nums[b + 1]) {
-          b++;
-        }
+        // while (nums[b] === nums[b + 1]) {
+        //   b++;
+        // }
         b++;
       }
     }
@@ -68,6 +68,6 @@ var threeSum = (nums) => {
 //   return out;
 // };
 
-const test = [-1, 0, 1, 2, -1, -4];
+const test = [0, 0, 0];
 
 console.log(threeSum(test));
