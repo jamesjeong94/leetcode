@@ -20,10 +20,8 @@ function TreeNode(val, left, right) {
   this.right = right === undefined ? null : right;
 }
 
-const test = new TreeNode(10);
-test.left = new TreeNode(5);
-test.right = new TreeNode(15);
-test.right.left = new TreeNode(6);
-test.right.right = new TreeNode(20);
-
+let test = new TreeNode(2);
+test.left = new TreeNode(1);
+test.right = new TreeNode(3);
+// console.log(test);
 console.log(isValidBST(test));

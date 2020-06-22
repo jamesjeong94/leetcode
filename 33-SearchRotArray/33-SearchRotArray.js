@@ -4,31 +4,33 @@
  * @return {number}
  */
 var search = function (nums, target) {
-  if (!nums.length) return -1;
-  if (nums.length === 1) {
-    if (nums[0] === target) return 0;
-    return -1;
-  }
-  if (target >= nums[0]) {
-    //left
-    for (let i = 0; i < nums.length; i++) {
-      if (target === nums[i]) return i;
-      if (nums[i] > target || nums[i] < nums[i - 1] || i === nums.length - 1) {
-        // console.log(nums[i]);
-        return -1;
+  let start = 0;
+  let end = nums.length - 1;
+  let mid = Math.floor((end - start) / 2);
+
+  while (start <= end) {
+    mid = Math.floor(start + (end - start) / 2);
+    console.log(start, mid, end);
+    console.log(nums[start], nums[mid], nums[end]);
+    if (nums[mid] === target) {
+      return mid;
+    } else if (nums[mid] >= nums[start]) {
+      if (target >= nums[start] && target < nums[mid]) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    } else {
+      if (target > nums[mid] && target <= nums[end]) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
       }
     }
-    //right
-  } else {
-    for (let i = nums.length - 1; i >= 0; i--) {
-      // console.log(nums[i - 1], nums[i]);
-      if (target === nums[i]) return i;
-      if (nums[i] < target || nums[i] > nums[i + 1] || i === 0) {
-        return -1;
-      }
-    }
   }
+  return -1;
 };
 
-console.log(search([4, 5, 6, 7, 0, 1, 2], 0));
-console.log(search([1, 3], 4));
+// console.log(search([4, 5, 6, 7, 0, 1, 2], 0));
+console.log(search([5, 1, 3], 3));
+// console.log(search([3, 0], 1));
