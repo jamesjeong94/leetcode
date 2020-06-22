@@ -41,22 +41,45 @@
 //   return result;
 // };
 
-const decodeString = (s) => {
-  let multiply = [];
+// const decodeString = (s) => {
+//   let multiply = [];
+//   let tempMult = '';
+//   let repeatStr = [];
+//   let solution = '';
+
+//   for (let i = 0; i < s.length; i++) {
+//     if (!isNaN(s[i])) {
+//       tempMult += s[i];
+//     } else if (s[i] === '[') {
+//       multiply.push(tempMult);
+//       tempMult = '';
+//       repeatStr.push(solution);
+//       solution = '';
+//     } else if (s[i] === ']') {
+//       solution = repeatStr.pop() + solution.repeat(multiply.pop());
+//     } else {
+//       solution += s[i];
+//     }
+//   }
+//   return solution;
+// };
+
+var decodeString = function (s) {
+  let multiplier = [];
+  let solution = '';
   let tempMult = '';
   let repeatStr = [];
-  let solution = '';
-
   for (let i = 0; i < s.length; i++) {
-    if (!isNaN(s[i])) {
+    // console.log(repeatStr);
+    if (s[i].match(/[0-9]/g)) {
       tempMult += s[i];
     } else if (s[i] === '[') {
-      multiply.push(tempMult);
+      multiplier.push(tempMult);
       tempMult = '';
       repeatStr.push(solution);
       solution = '';
     } else if (s[i] === ']') {
-      solution = repeatStr.pop() + solution.repeat(multiply.pop());
+      solution = repeatStr.pop() + solution.repeat(multiplier.pop());
     } else {
       solution += s[i];
     }
