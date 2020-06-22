@@ -1,17 +1,29 @@
-/**
- * @pcostrcostm {number[]} cost
- * @return {number}
- */
-const minCostClimbingStcostirs = (cost, m = {}) => {
-  let n = cost.length;
-  let dp = Array(n + 1);
-  dp[0] = cost[0];
-  dp[1] = cost[1];
-  for (let i = 2; i < n; ++i) {
-    dp[i] = cost[i] + Math.min(dp[i - 2], dp[i - 1]);
-    console.log(dp);
-  }
-  return Math.min(dp[n - 2], dp[n - 1]);
+var isValidBST = function (root) {
+  const traverse = (node, lower, upper) => {
+    if (node) {
+      if (node.val >= upper || node.val <= lower) {
+        return false;
+      }
+      return (
+        traverse(node.left, lower, node.val) &&
+        traverse(node.right, node.val, upper)
+      );
+    }
+    return true;
+  };
+  return traverse(root, -Infinity, Infinity);
 };
 
-console.log(minCostClimbingStcostirs([10, 15, 20]));
+function TreeNode(val, left, right) {
+  this.val = val === undefined ? 0 : val;
+  this.left = left === undefined ? null : left;
+  this.right = right === undefined ? null : right;
+}
+
+const test = new TreeNode(10);
+test.left = new TreeNode(5);
+test.right = new TreeNode(15);
+test.right.left = new TreeNode(6);
+test.right.right = new TreeNode(20);
+
+console.log(isValidBST(test));

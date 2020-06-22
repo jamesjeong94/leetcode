@@ -1,20 +1,17 @@
 var isValidBST = function (root) {
-  const traverse = (node, min, max) => {
-    console.log(node);
-    if (!node) {
-      return true;
+  const traverse = (node, lower, upper) => {
+    if (node) {
+      if (node.val >= upper || node.val <= lower) {
+        return false;
+      }
+      return (
+        traverse(node.left, lower, node.val) &&
+        traverse(node.right, node.val, upper)
+      );
     }
-    if (
-      (min !== null && node.right <= min) ||
-      (max !== null && node.left >= max)
-    ) {
-      return false;
-    }
-    return (
-      traverse(node.left, min, node.val) && traverse(node.right, node.val, max)
-    );
+    return true;
   };
-  return traverse(root, null, null);
+  return traverse(root, -Infinity, Infinity);
 };
 
 function TreeNode(val, left, right) {
