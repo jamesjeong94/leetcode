@@ -3,19 +3,29 @@
  * @return {number}
  */
 var compress = function (chars) {
-  let i = 0;
-  let count = 0;
-  let end = 0;
-  while (i < chars.length) {
-    if (chars[i] === chars[i - 1]) {
-      end = i;
+  if (!chars.length) return 0;
+  let j = 0;
+  let cur = chars[0];
+  let counter = 0;
+  for (let i = 0; i <= chars.length; i++) {
+    if (chars[i] === cur) {
+      counter++;
     } else {
-      chars.splice(i, i - end);
+      chars[j] = cur;
+      if (counter > 1) {
+        const s = counter.toString();
+        for (let k = 0; k < s.length; k++) {
+          chars[j] = s[k];
+          j++;
+        }
+      }
+      j++;
+      cur = chars[i];
+      counter = 1;
     }
-    console.log(end);
-    i++;
   }
-  return chars;
+  chars.splice(j, Infinity);
+  return j;
 };
 
 console.log(compress(['a', 'a', 'b', 'b', 'c', 'c', 'c']));
