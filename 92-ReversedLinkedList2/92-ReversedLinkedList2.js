@@ -12,7 +12,8 @@
  * @return {ListNode}
  */
 var reverseBetween = function (head, m, n) {
-  let prev = { next: head };
+  const dummy = { next: head };
+  let prev = dummy;
   for (let i = 0; i < m - 1; i++) {
     prev = prev.next;
   }
@@ -23,7 +24,7 @@ var reverseBetween = function (head, m, n) {
     next.next = prev.next;
     prev.next = next;
   }
-  return head;
+  return dummy.next;
 };
 
 function ListNode(val, next) {
