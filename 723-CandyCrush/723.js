@@ -9,10 +9,6 @@ const check = (i, j, coords, board, value, isVertical) => {
       if (isVertical === true || isVertical === null) {
         check(i + 1, j, coords, board, value, isVertical);
       }
-    } else {
-      // if (coords.length >= 3) {
-      //   console.log('not eq', coords);
-      // }
     }
   } else {
     if (coords.length >= 3) {
@@ -23,17 +19,21 @@ const check = (i, j, coords, board, value, isVertical) => {
 
 const change = (coords, board) => {
   for (let coord of coords) {
-    console.log(coord);
     let i = coord[0];
     let j = coord[1];
     board[i][j] = null;
   }
 };
 
+const drop = ()
+
 const candyCrush = (board) => {
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      check(i, j, [], board, board[i][j], null);
+  let isStable = false
+  while (!isStable) {
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        check(i, j, [], board, board[i][j], null);
+      }
     }
   }
   return board;
