@@ -1,40 +1,87 @@
-const check = (i, j, coords, board, value, isVertical) => {
-  // console.log(i, j);
-  if (i < board.length && i >= 0 && j < board[i].length && j >= 0) {
-    if (board[i][j] === value) {
-      coords.push([i, j]);
-      if (isVertical === null || isVertical === false) {
-        check(i, j + 1, coords, board, value, false);
-      }
-      if (isVertical === true || isVertical === null) {
-        check(i + 1, j, coords, board, value, isVertical);
+/**
+ * @param {number[][]} board
+ * @return {number[][]}
+ */
+const checkMatch = (match, board, coords) => {
+  if (match.length >= 3) {
+    for (let coord of match) {
+      let x = coord[0];
+      let y = coord[1];
+      coords.push([x, y]);
+    }
+    return true;
+  }
+  return false;
+};
+
+const dropNulls = (board) => {
+  for (let i = 0; i < board[0].length; i++) {
+    let stack = [];
+    for (let j = 0; j < board.length; j++) {
+      if (board[j][i] !== null) {
+        stack.push(board[j][i]);
       }
     }
-  } else {
-    if (coords.length >= 3) {
-      change(coords, board);
+    for (let j = board.length - 1; j >= 0; j--) {
+      if (stack.length > 0) {
+        board[j][i] = stack.pop();
+      } else {
+        board[j][i] = 0;
+      }
     }
   }
 };
 
-const change = (coords, board) => {
+const crush = (board, coords) => {
   for (let coord of coords) {
-    let i = coord[0];
-    let j = coord[1];
-    board[i][j] = null;
+    board[coord[0]][coord[1]] = null;
   }
 };
 
-const drop = ()
-
-const candyCrush = (board) => {
-  let isStable = false
+var candyCrush = function (board) {
+  let isStable = false;
+  let didChange = false;
+  let coords = [];
+  const checkSurroundings = (i, j, match, ref, isDown) => {
+    if (i < 0 || i > board.length - 1 || j < 0 || j > board[i].length - 1) {
+      if (checkMatch(match, board, coords)) {
+        didChange = true;
+      }
+      return;
+    }
+    if (board[i][j] !== ref) {
+      if (checkMatch(match, board, coords)) {
+        didChange = true;
+      }
+      return;
+    }
+    if (board[i][j] === ref && board[i][j] !== 0) {
+      match.push([i, j]);
+      if (isDown) {
+        checkSurroundings(i + 1, j, [...match], ref, true);
+        checkSurroundings(i, j + 1, [[i, j]], ref, false);
+      } else {
+        checkSurroundings(i + 1, j, [[i, j]], ref, true);
+        checkSurroundings(i, j + 1, [...match], ref, false);
+      }
+    }
+  };
   while (!isStable) {
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[i].length; j++) {
-        check(i, j, [], board, board[i][j], null);
+        checkSurroundings(i + 1, j, [[i, j]], board[i][j], true);
+        checkSurroundings(i, j + 1, [[i, j]], board[i][j], false);
       }
     }
+    if (didChange) {
+      isStable = false;
+      crush(board, coords);
+      dropNulls(board);
+      coords = [];
+    } else {
+      isStable = true;
+    }
+    didChange = false;
   }
   return board;
 };
